@@ -10,7 +10,19 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends(
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:tailwindcss/recommended"
+  ),
+  {
+    rules: {
+      "react/react-in-jsx-scope": "off", // Next.js doesn't require React in scope
+      "tailwindcss/no-custom-classname": "off", // Disable if custom classnames are used
+    },
+  },
 ];
 
 export default eslintConfig;
