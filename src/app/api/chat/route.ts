@@ -11,6 +11,6 @@ export async function POST(req: NextRequest) {
     prompt = `You’re VibeCheckr’s Idea Validator. User says: "${message}". Context: ${context || 'new idea'}. Ask chill questions to refine based on pain points, feasibility, revenue—in that order. Keep it vibey.`;
   }
 
-  const reply = await queryLLM(prompt);
+  const reply = await queryLLM(prompt).catch(() => "Sorry, I couldn't process that. Try again!");
   return NextResponse.json({ reply });
 }

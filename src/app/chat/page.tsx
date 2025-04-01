@@ -3,33 +3,30 @@ import { useState } from 'react';
 import ChatBubble from '@/components/ChatBubble';
 import Button from '@/components/Button';
 
+interface Message {
+  text: string;
+  isUser: boolean;
+}
+
 export default function VibeCheckrChat() {
-  const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([
+  const [messages, setMessages] = useState<Message[]>([
     { text: 'Yo, welcome to VibeCheckr! Wanna vibe-check an idea or skip to planning an MVP?', isUser: false },
   ]);
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<'validate' | 'plan' | null>(null);
 
-  const sendMessage = async () => {
-    const newMessages = [...messages, { text: input, isUser: true }];
+  const handleMessage = async (message: string, newMode: 'validate' | 'plan' | null = mode) => {
+    setMode(newMode);
+    const newMessages = [...messages, { text: message, isUser: true }];
     setMessages(newMessages);
+
     const res = await fetch('/api/chat', {
       method: 'POST',
-      body: JSON.stringify({ message: input, context: messages.map(m => m.text).join(' | '), mode }),
+      body: JSON.stringify({ message, context: messages.map((m) => m.text).join(' | '), mode: newMode }),
     });
     const { reply } = await res.json();
     setMessages([...newMessages, { text: reply, isUser: false }]);
     setInput('');
-  };
-
-  const skipToPlanner = async () => {
-    setMode('plan');
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      body: JSON.stringify({ message: 'Skip to planner', context: messages.map(m => m.text).join(' | '), mode: 'plan' }),
-    });
-    const { reply } = await res.json();
-    setMessages([...messages, { text: reply, isUser: false }]);
   };
 
   return (
@@ -41,18 +38,15 @@ export default function VibeCheckrChat() {
         ))}
       </div>
       {mode === null && (
-        <Button onClick={skipToPlanner} className="m-2 bg-purple-600 hover:bg-purple-700">
+        <Button onClick={() => handleMessage('Skip to planner', 'plan')} className="m-2 bg-purple-600 hover:bg-purple-700">
           Skip to Planner
         </Button>
       )}
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            if (!mode) setMode('validate');
-            sendMessage();
-          }
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleMessage(input, mode || 'validate');
         }}
         className="p-2 bg-gray-800 border-t border-gray-700 focus:outline-none"
         placeholder="Drop your idea here..."
