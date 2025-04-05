@@ -14,10 +14,6 @@ const robotoMono = Roboto_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "VibeCheckr",
-  description: "Validate ideas and plan MVPs effortlessly.",
-};
 
 export default function RootLayout({
   children,
