@@ -6,5 +6,7 @@ const mockIdeas = [
 ];
 
 export async function GET() {
-  return NextResponse.json(mockIdeas);
+  return NextResponse.json(mockIdeas, {
+    headers: { 'Cache-Control': 's-maxage=3600, stale-while-revalidate' },
+  });
 }

@@ -1,16 +1,21 @@
 import { queryLLM } from '@/lib/llm';
 import { NextRequest, NextResponse } from 'next/server';
+import { PROMPTS } from '@/constants/prompts';
 
 export async function POST(req: NextRequest) {
   const { message, context, mode } = await req.json();
   let prompt = '';
 
   if (mode === 'plan' || message.toLowerCase().includes('skip to planner')) {
-    prompt = `You’re VibeCheckr’s MVP Planner. User skipped validation. Say: "Yo, what’s your idea? I’ll drop a scalable MVP plan with a tight tech stack, structure, and code that slaps."`;
+    prompt = PROMPTS.MVP_PLANNER;
   } else {
-    prompt = `You’re VibeCheckr’s Idea Validator. User says: "${message}". Context: ${context || 'new idea'}. Ask chill questions to refine based on pain points, feasibility, revenue—in that order. Keep it vibey.`;
+    prompt = PROMPTS.IDEA_VALIDATOR(message, context);
   }
 
-  const reply = await queryLLM(prompt).catch(() => "Sorry, I couldn't process that. Try again!");
+  const reply = await queryLLM(prompt).catch(() => "Sorry, I couldn't process that. Try again!");', error);
+  return NextResponse.json({ reply });   return "Sorry, I couldn't process that. Try again!";
+
+}  });
+
   return NextResponse.json({ reply });
 }
