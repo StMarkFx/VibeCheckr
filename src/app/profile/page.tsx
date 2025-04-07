@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { fetchData } from '@/lib/fetchData';
 
 interface Idea {
   id: string;
@@ -11,12 +12,7 @@ export default function ProfilePage() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
 
   useEffect(() => {
-    async function fetchIdeas() {
-      const res = await fetch('/api/ideas');
-      const data = await res.json();
-      setIdeas(data);
-    }
-    fetchIdeas();
+    fetchData<Idea[]>('/api/ideas').then(setIdeas).catch(console.error);
   }, []);
 
   return (
