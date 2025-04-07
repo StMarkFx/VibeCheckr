@@ -1,16 +1,16 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 export default function FeedbackPage() {
-  const [feedback, setFeedback] = useState('');
+  const [feedback, setFeedback] = useState("");
 
   const handleSubmit = async () => {
-    await fetch('/api/feedback', {
-      method: 'POST',
+    await fetch("/api/feedback", {
+      method: "POST",
       body: JSON.stringify({ feedback }),
     });
-    setFeedback('');
-    alert('Thank you for your feedback!');
+    setFeedback("");
+    alert("Thank you for your feedback!");
   };
 
   return (

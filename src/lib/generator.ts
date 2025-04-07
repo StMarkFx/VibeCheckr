@@ -1,11 +1,11 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 const TECH_STACK = {
-  frontend: 'Next.js (serverless, SSR, API routes)',
-  backend: 'Supabase (PostgreSQL, RLS, real-time)',
-  ui: 'Shadcn/ui + Tailwind (modular, fast)',
-  payments: 'Stripe (scalable, secure)',
-  cache: 'Vercel Edge (perf boost)',
+  frontend: "Next.js (serverless, SSR, API routes)",
+  backend: "Supabase (PostgreSQL, RLS, real-time)",
+  ui: "Shadcn/ui + Tailwind (modular, fast)",
+  payments: "Stripe (scalable, secure)",
+  cache: "Vercel Edge (perf boost)",
 };
 
 const STRUCTURE = `
@@ -37,9 +37,11 @@ const NOTES = `
 
 export function generatePlan(idea: string, responses: string[]) {
   try {
-    const sanitizedIdea = idea.replace(/[^a-zA-Z0-9\s]/g, '');
+    const sanitizedIdea = idea.replace(/[^a-zA-Z0-9\s]/g, "");
     const ideaSchema = z.string().min(3).parse(sanitizedIdea);
-    const parsedIdea = ideaSchema.toLowerCase().includes('tutor') ? 'tutoring' : 'generic';
+    const parsedIdea = ideaSchema.toLowerCase().includes("tutor")
+      ? "tutoring"
+      : "generic";
 
     return {
       idea,
@@ -81,8 +83,8 @@ export function generatePlan(idea: string, responses: string[]) {
     };
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error('Invalid idea input: ' + error.message);
+      throw new Error("Invalid idea input: " + error.message);
     }
-    throw new Error('Invalid idea input: An unknown error occurred.');
+    throw new Error("Invalid idea input: An unknown error occurred.");
   }
 }

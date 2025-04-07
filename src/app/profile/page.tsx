@@ -1,6 +1,6 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { fetchData } from '@/lib/fetchData';
+"use client";
+import { useEffect, useState } from "react";
+import { fetchData } from "@/lib/fetchData";
 
 interface Idea {
   id: string;
@@ -12,7 +12,7 @@ export default function ProfilePage() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
 
   useEffect(() => {
-    fetchData<Idea[]>('/api/ideas').then(setIdeas).catch(console.error);
+    fetchData<Idea[]>("/api/ideas").then(setIdeas).catch(console.error);
   }, []);
 
   return (
@@ -22,7 +22,9 @@ export default function ProfilePage() {
         {ideas.map((idea) => (
           <li key={idea.id} className="p-4 bg-gray-800 rounded-lg">
             <p>{idea.text}</p>
-            <small className="text-gray-400">Created: {new Date(idea.createdAt).toLocaleString()}</small>
+            <small className="text-gray-400">
+              Created: {new Date(idea.createdAt).toLocaleString()}
+            </small>
           </li>
         ))}
       </ul>

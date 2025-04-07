@@ -1,11 +1,11 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 export default function ExportPage() {
   const [plan, setPlan] = useState<string | null>(null);
 
   const handleExport = async () => {
-    const res = await fetch('/api/export', { method: 'POST' });
+    const res = await fetch("/api/export", { method: "POST" });
     const data = await res.json();
     setPlan(data.plan);
   };

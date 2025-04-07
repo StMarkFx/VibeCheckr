@@ -12,10 +12,10 @@ export async function POST(req: NextRequest) {
     prompt = PROMPTS.IDEA_VALIDATOR(message, context);
   }
 
-  const reply = await queryLLM(prompt).catch(() => "Sorry, I couldn't process that. Try again!");', error);
-  return NextResponse.json({ reply });   return "Sorry, I couldn't process that. Try again!";
-
-}  });
+  const reply = await queryLLM(prompt).catch((error) => {
+    console.error('Error querying LLM:', error);
+    return "Sorry, I couldn't process that. Try again!";
+  });
 
   return NextResponse.json({ reply });
 }

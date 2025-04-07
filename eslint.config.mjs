@@ -15,7 +15,7 @@ const eslintConfig = [
     "next/typescript",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:tailwindcss/recommended"
+    "plugin:tailwindcss/recommended",
   ),
   {
     rules: {

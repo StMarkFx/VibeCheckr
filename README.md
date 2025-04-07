@@ -22,12 +22,14 @@ VibeCheckr is your ultimate AI-powered assistant for validating ideas and planni
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/your-repo/vibecheckr.git
    cd vibecheckr
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    # or
