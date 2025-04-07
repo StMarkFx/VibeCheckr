@@ -11,6 +11,7 @@ export default function Button({ onClick, children, className }: ButtonProps) {
     <button
       onClick={onClick}
       className={`px-4 py-2 rounded-lg text-white ${className || ''}`}
+      aria-label={children?.toString() || 'Button'}
     >
       {children}
     </button>
