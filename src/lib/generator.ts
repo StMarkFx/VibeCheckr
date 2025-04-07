@@ -37,14 +37,14 @@ const NOTES = `
 
 export function generatePlan(idea: string, responses: string[]) {
   try {
-    const sanitizedIdea = idea.replace(/[^a-zA-Z0-9\s]/g, "");
+    const sanitizedIdea = idea.trim().replace(/[^a-zA-Z0-9\s]/g, "");
     const ideaSchema = z.string().min(3).parse(sanitizedIdea);
     const parsedIdea = ideaSchema.toLowerCase().includes("tutor")
       ? "tutoring"
       : "generic";
 
     return {
-      idea,
+      idea: sanitizedIdea,
       techStack: TECH_STACK,
       structure: STRUCTURE,
       code: `

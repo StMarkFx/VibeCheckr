@@ -34,12 +34,16 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={darkMode ? "dark" : ""}>
-      <body className={`${inter.variable} ${robotoMono.variable} antialiased`}>
+      <body
+        className={`${inter.variable} ${robotoMono.variable} antialiased`}
+        style={{ backgroundColor: "var(--color-background)", color: "var(--color-foreground)" }}
+      >
         <header className="p-4 flex justify-between items-center">
           <h1 className="text-xl font-bold">VibeCheckr</h1>
           <button
             onClick={toggleDarkMode}
             className="p-2 bg-gray-200 dark:bg-gray-800 rounded"
+            aria-label="Toggle Dark Mode"
           >
             {darkMode ? "Light Mode" : "Dark Mode"}
           </button>

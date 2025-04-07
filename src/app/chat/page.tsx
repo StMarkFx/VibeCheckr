@@ -15,18 +15,29 @@ export default function VibeCheckrChat() {
   ]);
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<'validate' | 'plan' | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleMessage = async (message: string, newMode: 'validate' | 'plan' | null = mode) => {
+    if (!message.trim()) {
+      setError('Message cannot be empty.');
+      return;
+    }
+    setError(null);
     setMode(newMode);
     const newMessages = [...messages, { text: message, isUser: true }];
     setMessages(newMessages);
 
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      body: JSON.stringify({ message, context: messages.map((m) => m.text).join(' | '), mode: newMode }),
-    });
-    const { reply } = await res.json();
-    setMessages((prevMessages) => [...prevMessages, { text: reply, isUser: false }]);
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        body: JSON.stringify({ message, context: messages.map((m) => m.text).join(' | '), mode: newMode }),
+      });
+      const { reply } = await res.json();
+      setMessages((prevMessages) => [...prevMessages, { text: reply, isUser: false }]);
+    } catch (err) {
+      console.error('Failed to send message:', err);
+      setError('Failed to send message. Please try again.');
+    }
     setInput('');
   };
 
@@ -38,6 +49,7 @@ export default function VibeCheckrChat() {
           <ChatBubble key={i} text={msg.text} isUser={msg.isUser} />
         ))}
       </div>
+      {error && <p className="text-red-500 p-2">{error}</p>}
       {mode === null && (
         <Button onClick={() => handleMessage('Skip to planner', 'plan')} className="m-2 bg-purple-600 hover:bg-purple-700">
           Skip to Planner
