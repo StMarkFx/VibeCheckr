@@ -23,32 +23,37 @@ export default function RootLayout({
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode") === "true";
     setDarkMode(savedMode);
+    document.documentElement.classList.toggle("dark", savedMode);
   }, []);
 
   const toggleDarkMode = () => {
     setDarkMode((prev) => {
-      localStorage.setItem("darkMode", (!prev).toString());
-      return !prev;
+      const newMode = !prev;
+      localStorage.setItem("darkMode", newMode.toString());
+      document.documentElement.classList.toggle("dark", newMode);
+      return newMode;
     });
   };
 
   return (
-    <html lang="en" className={darkMode ? "dark" : ""}>
+    <html lang="en">
       <body
-        className={`${inter.variable} ${robotoMono.variable} antialiased`}
+        className="antialiased"
         style={{ backgroundColor: "var(--color-background)", color: "var(--color-foreground)" }}
       >
-        <header className="p-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold">VibeCheckr</h1>
-          <button
-            onClick={toggleDarkMode}
-            className="p-2 bg-gray-200 dark:bg-gray-800 rounded"
-            aria-label="Toggle Dark Mode"
-          >
-            {darkMode ? "Light Mode" : "Dark Mode"}
-          </button>
-        </header>
-        {children}
+        <div className={`${inter.variable} ${robotoMono.variable}`}>
+          <header className="p-4 flex justify-between items-center">
+            <h1 className="text-xl font-bold">VibeCheckr</h1>
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 bg-gray-200 dark:bg-gray-800 rounded"
+              aria-label="Toggle Dark Mode"
+            >
+              {darkMode ? "Light Mode" : "Dark Mode"}
+            </button>
+          </header>
+          {children}
+        </div>
       </body>
     </html>
   );
