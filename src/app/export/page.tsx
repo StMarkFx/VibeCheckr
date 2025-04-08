@@ -8,6 +8,7 @@ export default function ExportPage() {
     const res = await fetch("/api/export", { method: "POST" });
     const data = await res.json();
     setPlan(data.plan);
+    alert("Your MVP plan has been successfully exported!");
   };
 
   return (
