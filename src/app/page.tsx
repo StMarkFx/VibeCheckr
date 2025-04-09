@@ -56,7 +56,7 @@ export function Home() {
           </a>
         </div>
       </main>
-      <footer className="mt-12 text-sm text-gray-400"></footer>
+      <footer className="mt-12 text-sm text-gray-400">
         Built with ❤️ using Next.js and Tailwind CSS.
       </footer>
     </div>
