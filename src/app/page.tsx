@@ -1,6 +1,16 @@
 import Image from "next/image";
 
-export default function Home() {
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+      </body>
+    </html>
+  );
+}
+
+export function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-8 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white">
       <header className="text-center mb-12">
@@ -46,7 +56,7 @@ export default function Home() {
           </a>
         </div>
       </main>
-      <footer className="mt-12 text-sm text-gray-400">
+      <footer className="mt-12 text-sm text-gray-400"></footer>
         Built with ❤️ using Next.js and Tailwind CSS.
       </footer>
     </div>

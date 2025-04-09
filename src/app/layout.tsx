@@ -24,14 +24,12 @@ export default function RootLayout({
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode") === "true";
     setDarkMode(savedMode);
-    document.documentElement.classList.toggle("dark", savedMode);
   }, []);
 
   const toggleDarkMode = () => {
     setDarkMode((prev) => {
       const newMode = !prev;
       localStorage.setItem("darkMode", newMode.toString());
-      document.documentElement.classList.toggle("dark", newMode);
       return newMode;
     });
   };
@@ -42,8 +40,11 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en">
-      <body className="bg-gray-900 text-white">
+    <html lang="en" className={`${darkMode ? "dark" : ""}`}>
+      <head>
+        {/* Add any required meta tags or links here */}
+      </head>
+      <body className={`${inter.variable} ${robotoMono.variable}`}>
         <header className="p-4 flex justify-between items-center bg-gray-800 text-white">
           <h1 className="text-xl font-bold">VibeCheckr</h1>
           <nav className="flex gap-4">
